@@ -1,0 +1,60 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {
+      colors: {
+        bg:         "#0f0f11",
+        surface:    "#18181b",
+        "surface-2":"#1f1f23",
+        border:     "#27272a",
+        "border-2": "#3f3f46",
+        accent:     "#7c3aed",
+        "accent-h": "#6d28d9",
+        "accent-s": "#8b5cf6",
+        text:       "#fafafa",
+        "text-2":   "#a1a1aa",
+        "text-3":   "#52525b",
+      },
+      fontFamily: {
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        mono: ["JetBrains Mono", "Fira Code", "monospace"],
+      },
+      fontSize: {
+        "2xs": ["10px", "14px"],
+        xs:    ["11px", "16px"],
+        sm:    ["12px", "18px"],
+        base:  ["13px", "20px"],
+        md:    ["14px", "20px"],
+        lg:    ["15px", "22px"],
+        xl:    ["17px", "24px"],
+        "2xl": ["20px", "28px"],
+        "3xl": ["24px", "32px"],
+      },
+      borderRadius: {
+        DEFAULT: "8px",
+        sm:  "5px",
+        md:  "8px",
+        lg:  "12px",
+        xl:  "16px",
+        "2xl": "20px",
+      },
+      boxShadow: {
+        sm:  "0 1px 3px rgba(0,0,0,0.3)",
+        md:  "0 4px 12px rgba(0,0,0,0.3)",
+        lg:  "0 8px 32px rgba(0,0,0,0.4)",
+        panel: "0 8px 32px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2)",
+      },
+      transitionDuration: { DEFAULT: "150ms" },
+      animation: {
+        "fade":       "fadeIn 150ms ease",
+        "slide-up":   "slideUp 180ms ease",
+        "slide-down": "slideDown 180ms ease",
+        "scale-in":   "scaleIn 150ms ease",
+        "shimmer":    "shimmer 1.5s infinite",
+        "spin-slow":  "spin 2s linear infinite",
+      },
+    },
+  },
+  plugins: [],
+};
