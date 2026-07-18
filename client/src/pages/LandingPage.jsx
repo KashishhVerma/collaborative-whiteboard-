@@ -27,7 +27,7 @@ function CanvasPreview() {
     >
       {/* Fake toolbar */}
       <div className="absolute left-3 top-3 flex flex-col gap-1.5">
-        {["#7c3aed","#ec4899","#06b6d4","#10b981"].map((c,i) => (
+        {["#0F0F11","#ec4899","#06b6d4","#10b981"].map((c,i) => (
           <div key={i} className="w-5 h-5 rounded" style={{ background: c, opacity: 0.8 }} />
         ))}
       </div>
@@ -171,7 +171,7 @@ export default function LandingPage() {
             >
               <div
                 className="w-7 h-7 rounded flex items-center justify-center mb-3"
-                style={{ background: "rgba(124,58,237,0.1)" }}
+                style={{ background: "rgba(241,181,223,0.1)" }}
               >
                 <Icon size={14} style={{ color: "#8b5cf6" }} />
               </div>

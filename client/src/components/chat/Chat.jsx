@@ -4,7 +4,7 @@ import { getSocket } from "../../services/socket.js";
 import { Send, MessageSquare } from "lucide-react";
 import { EmptyState } from "../ui/Primitives.jsx";
 
-const COLORS = ["#7c3aed","#db2777","#0891b2","#059669","#d97706","#dc2626"];
+const COLORS = ["#F1B5DF","#db2777","#0891b2","#059669","#d97706","#dc2626"];
 const getColor = (name) => COLORS[(name?.charCodeAt(0) || 0) % COLORS.length];
 
 function fmt(ts) {

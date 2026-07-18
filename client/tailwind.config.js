@@ -9,7 +9,7 @@ export default {
         "surface-2":"#1f1f23",
         border:     "#27272a",
         "border-2": "#3f3f46",
-        accent:     "#7c3aed",
+        accent:     "#F1B5DF",
         "accent-h": "#6d28d9",
         "accent-s": "#8b5cf6",
         text:       "#fafafa",

@@ -6,7 +6,7 @@ import { Pencil, Eraser, Minus, Square, Circle, Trash2, Save, Download, Undo2, R
 import { Tooltip } from "../ui/Primitives.jsx";
 import toast from "react-hot-toast";
 
-const PALETTE = ["#fafafa","#7c3aed","#ec4899","#06b6d4","#10b981","#f59e0b","#ef4444","#f97316"];
+const PALETTE = ["#fafafa","#F1B5DF","#ec4899","#06b6d4","#10b981","#f59e0b","#ef4444","#f97316"];
 const WIDTHS   = [{ v: 2, h: 2 }, { v: 4, h: 3 }, { v: 8, h: 5 }, { v: 16, h: 7 }];
 
 const DiamondIcon = () => (

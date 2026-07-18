@@ -135,7 +135,7 @@ export default function DashboardPage() {
                   onClick={() => setTab(t)}
                   className="flex-1 py-1.5 rounded text-sm font-medium transition-all duration-150 capitalize"
                   style={tab === t
-                    ? { background: "#7c3aed", color: "#fff" }
+                    ? { background: "#0F0F11", color: "#fff" }
                     : { color: "#71717a" }
                   }
                 >
