@@ -156,6 +156,11 @@ function AIDiagram({ onClose, roomCode, dark }) {
       if (!data.shapes) throw new Error(data.message || "No shapes returned");
       const { getSocket } = await import("../services/socket.js");
       const socket = getSocket();
+      // Capture canvas snapshot BEFORE drawing
+      const canvasEl = document.querySelector("canvas");
+      const beforeSnap = canvasEl ? canvasEl.toDataURL() : null;
+
+      // Draw all shapes on canvas
       data.shapes.forEach((shape, i) => {
         setTimeout(() => {
           const stroke = {
@@ -170,26 +175,51 @@ function AIDiagram({ onClose, roomCode, dark }) {
             id: `ai_${Date.now()}_${i}`,
             ...(shape.text && { text: shape.text }),
           };
-
-          // Draw locally — try both paths
           const h = window.__canvasHandlers;
-          if (h?.onRemoteDraw) {
-            h.onRemoteDraw({ stroke });
-          } else {
-            // Fallback: direct canvas draw
-            const canvas = document.querySelector("canvas");
-            if (canvas) {
-              import("../components/canvas/Canvas.jsx").then(({ applyStroke }) => {
-                applyStroke(canvas.getContext("2d"), stroke);
-              });
-            }
-          }
-
-          // Broadcast to others
+          if (h?.onRemoteDraw) h.onRemoteDraw({ stroke });
           socket?.emit("canvas:draw", { roomCode, stroke });
         }, i * 150);
       });
 
+      // After all shapes drawn — take snapshot and put in draggable layer
+      const totalDelay = data.shapes.length * 150 + 400;
+      setTimeout(() => {
+        const canvas = document.querySelector("canvas");
+        if (!canvas) return;
+
+        // Get bounding box of all shapes
+        const xs = data.shapes.flatMap((s) => [Number(s.x1), Number(s.x2)]).filter(Boolean);
+        const ys = data.shapes.flatMap((s) => [Number(s.y1), Number(s.y2)]).filter(Boolean);
+        const minX = Math.max(0, Math.min(...xs) - 20);
+        const minY = Math.max(0, Math.min(...ys) - 20);
+        const maxX = Math.min(canvas.width, Math.max(...xs) + 20);
+        const maxY = Math.min(canvas.height, Math.max(...ys) + 20);
+        const w = maxX - minX;
+        const h2 = maxY - minY;
+
+        if (w < 10 || h2 < 10) return;
+
+        // Crop just the diagram area from canvas
+        const tmp = document.createElement("canvas");
+        tmp.width = w; tmp.height = h2;
+        tmp.getContext("2d").drawImage(canvas, minX, minY, w, h2, 0, 0, w, h2);
+        const src = tmp.toDataURL();
+
+        // Erase those shapes from main canvas (restore before snapshot)
+        if (beforeSnap) {
+          const img = new Image();
+          img.onload = () => {
+            canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+            canvas.getContext("2d").drawImage(img, 0, 0);
+          };
+          img.src = beforeSnap;
+        }
+
+        // Add as draggable image
+        const id = `ai_diagram_${Date.now()}`;
+        window.__canvasActions?.addImage({ id, src, x: minX, y: minY, w, h: h2 });
+        toast.success("Diagram added! Drag to move, corner to resize ↗");
+      }, totalDelay);
       // Auto-save after all shapes drawn
       setTimeout(() => {
         window.__canvasActions?.handleSave?.();
